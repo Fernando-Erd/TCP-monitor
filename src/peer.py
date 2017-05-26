@@ -5,8 +5,8 @@ import sys
 import threading
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = 6000
 BUFFER_SIZE = 1024
+TCP_PORT = 8123
 #-----------------------------SERVIDOR-------------------------------#
 def server():
     tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,7 +18,7 @@ def server():
         data = conn.recv(BUFFER_SIZE)
         print "Mensagem:", data
         if (data == "sair"):
-            conn.close()
+            break;
         conn.send(data)  # echo
     conn.close()
 
@@ -32,14 +32,13 @@ def client():
         data = tcp_client.recv(BUFFER_SIZE)
         #Encerrando o Loop
         if (MESSAGE == "sair"):
-            tcp_client.close()
+            break
     tcp_client.close()
     print 'received data:', data
 
 #-----------------------------MAIN-------------------------------#
 
 threadServer = threading.Thread(target=server)
-threadClient = threading.Thread(target=client)
+#threadServer.daemon = True
 threadServer.start()
-threadClient.start()
-
+client()
