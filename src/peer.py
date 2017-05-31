@@ -21,16 +21,19 @@ class IP_ID_Class (object):
         self.IP = IP
         self.ID = ID
 
+#Funcao que retorna o ip da maquina que o peer esta rodando
 def getMyIP():
     return socket.gethostbyname(socket.gethostname())
 
+#Funcao que fica escutando a porta 
 def serverListen(conn, addr):
     while True:
         data = conn.recv(BUFFER_SIZE)
-        if (data != ""):
-            print "Mensagem:", data
+        print "Mensagem:", data
 
-#-----------------------------SERVIDOR-------------------------------#
+
+#Inicia o servidor em determinada porta, para cada sessao tcp conectada cria
+#uma thread que tem como funcao sempre ficar escutando o que a sessao tcp envia
 def server():
     tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print "Iniciei o server"
@@ -44,7 +47,11 @@ def server():
         threadServerListen.start()
     conn.close()
 
-#-----------------------------CLIENT--------------------- ----------#
+
+#Funcao que envia a mensagem para os outros peers
+#Existe um array chamado tcps que guarda o estado da sessao para cada ip, e ao 
+#percorrer esse array envia uma msg para cada peer conectado, essa msg e
+#enviada a cada 5 segundos.
 def client():
     tcps = []
     time.sleep(5)
@@ -80,8 +87,8 @@ with open('server.txt', 'r') as arq:
     arq.close()
 
 #Printa Porta, Ip e Ids
-print "OLA, O MEU IP E O SEGUINTE", getMyIP()
-print "Numero de Servidores:", number_of_servers
+print "Iniciando peer com o ip: ", getMyIP()
+print "Numero de Servidores: ", number_of_servers
 print "Porta:", port
 for i in range(0, len(ip_id_objects)):
     print ip_id_objects[i].ID, ip_id_objects[i].IP
