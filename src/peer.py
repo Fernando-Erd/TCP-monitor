@@ -21,15 +21,20 @@ class IP_ID_Class (object):
         self.IP = IP
         self.ID = ID
 
+def getMyIP():
+    return socket.gethostbyname(socket.gethostname())
+
 #-----------------------------SERVIDOR-------------------------------#
 def server():
     tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print "Iniciei o server"
-    tcp_server.bind((TCP_IP, port))
+    tcp_server.bind((getMyIP(), port))
     tcp_server.listen(1)
-    conn, addr = tcp_server.accept()
-    print "Endereco da Conexao, Processo:", addr
     while True:
+        conn, addr = tcp_server.accept()
+        
+
+        print "Endereco da Conexao, Processo:", addr
         data = conn.recv(BUFFER_SIZE)
         print "Mensagem:", data
         if (data == "sair"):
@@ -68,6 +73,7 @@ with open('server.txt', 'r') as arq:
         ip_id_objects.append(IP_ID_Class(valores[0], int(valores[1])))
     arq.close()
 #Printa Porta, Ip e Ids
+print "OLA, O MEU IP E O SEGUINTE", getMyIP()
 print "Numero de Servidores:", number_of_servers
 print "Porta:", port
 for i in range(0, len(ip_id_objects)):
