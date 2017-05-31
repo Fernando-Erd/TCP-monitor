@@ -27,8 +27,8 @@ def getMyIP():
 def serverListen(conn, addr):
     while True:
         data = conn.recv(BUFFER_SIZE)
-        print "Endereco da Conexao, Processo:", addr
-        print "Mensagem:", data
+        if (data != ""):
+            print "Mensagem:", data
 
 #-----------------------------SERVIDOR-------------------------------#
 def server():
@@ -46,18 +46,21 @@ def server():
 
 #-----------------------------CLIENT--------------------- ----------#
 def client():
-    tcp_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcps = []
+    time.sleep(5)
+    for i in range (0, len(ip_id_objects)):
+        if (ip_id_objects[i].IP != getMyIP()):
+            tcp_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            tcp_client.connect((ip_id_objects[i].IP, port))
+            tcps.append(tcp_client)
     while True: 
-        old_time = time.time()
-        current_time = time.time()
-        while (current_time - old_time < 10):
-            current_time = time.time()
-        for i in range (0, len(ip_id_objects)):
-            if (ip_id_objects[i].IP != getMyIP()):
-                MESSAGE = "Sou o " + ip_id_objects[i].IP + ' Estou Vivo' 
-                tcp_client.connect((ip_id_objects[i].IP, port))
-                tcp_client.send(MESSAGE)
-        tcp_client.close()
+        time.sleep(5)
+        for i in range (0, len(ip_id_objects)-1):
+            print 'Sou o Cliente, estou me preparando para enviar uma msg'
+            MESSAGE = "Sou o " + ip_id_objects[i].IP + ' Estou Vivo' 
+            tcps[i].send(MESSAGE)
+            print "Sou o Cliente, consegui enviar a mensagem"
+#        tcp_client.close()
 
 #-----------------------------MAIN-------------------------------#
 
