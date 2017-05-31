@@ -3,6 +3,7 @@
 import socket
 import sys
 import threading
+import time
 
 #####################################################################
 ######################Variaveis Importantes##########################
@@ -11,7 +12,7 @@ import threading
 # number_of_server = Numero de servidores                           #
 #####################################################################
 
-TCP_IP = '127.0.0.1'
+TCP_IP = '200.17.202.6'
 BUFFER_SIZE = 1024
 
 #Classe com os objetos IP e ID
@@ -23,6 +24,7 @@ class IP_ID_Class (object):
 #-----------------------------SERVIDOR-------------------------------#
 def server():
     tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print "Iniciei o server"
     tcp_server.bind((TCP_IP, port))
     tcp_server.listen(1)
     conn, addr = tcp_server.accept()
@@ -35,19 +37,19 @@ def server():
         conn.send(data)  # echo
     conn.close()
 
-#-----------------------------CLIENT-------------------------------#
+#-----------------------------CLIENT--------------------- ----------#
 def client():
     tcp_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tcp_client.connect((TCP_IP, port))
-    while True:
-        MESSAGE = raw_input()
-        tcp_client.send(MESSAGE)
-        data = tcp_client.recv(BUFFER_SIZE)
-        #Encerrando o Loop
-        if (MESSAGE == "sair"):
-            break
-    tcp_client.close()
-    print 'received data:', data
+    while True: 
+        old_time = time.time()
+        current_time = time.time()
+        while (current_time - old_time < 10):
+            current_time = time.time()
+        for i in range (0, len(ip_id_objects)):
+            MESSAGE = "Sou o " + ip_id_objects[i].IP + ' Estou Vivo' 
+            tcp_client.connect((ip_id_objects[i].IP, port))
+            tcp_client.send(MESSAGE)
+        tcp_client.close()
 
 #-----------------------------MAIN-------------------------------#
 
