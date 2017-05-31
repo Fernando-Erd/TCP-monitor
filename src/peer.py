@@ -24,6 +24,12 @@ class IP_ID_Class (object):
 def getMyIP():
     return socket.gethostbyname(socket.gethostname())
 
+def serverListen(conn, addr):
+    while True:
+        data = conn.recv(BUFFER_SIZE)
+        print "Endereco da Conexao, Processo:", addr
+        print "Mensagem:", data
+
 #-----------------------------SERVIDOR-------------------------------#
 def server():
     tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,14 +38,10 @@ def server():
     tcp_server.listen(1)
     while True:
         conn, addr = tcp_server.accept()
-        
-
-        print "Endereco da Conexao, Processo:", addr
-        data = conn.recv(BUFFER_SIZE)
-        print "Mensagem:", data
-        if (data == "sair"):
-            break;
-        conn.send(data)  # echo
+        print conn, addr
+        threadServerListen = threading.Thread(target= serverListen, args=(conn, addr))
+        threadServerListen.daemon = True
+        threadServerListen.start()
     conn.close()
 
 #-----------------------------CLIENT--------------------- ----------#
@@ -51,9 +53,10 @@ def client():
         while (current_time - old_time < 10):
             current_time = time.time()
         for i in range (0, len(ip_id_objects)):
-            MESSAGE = "Sou o " + ip_id_objects[i].IP + ' Estou Vivo' 
-            tcp_client.connect((ip_id_objects[i].IP, port))
-            tcp_client.send(MESSAGE)
+            if (ip_id_objects[i].IP != getMyIP()):
+                MESSAGE = "Sou o " + ip_id_objects[i].IP + ' Estou Vivo' 
+                tcp_client.connect((ip_id_objects[i].IP, port))
+                tcp_client.send(MESSAGE)
         tcp_client.close()
 
 #-----------------------------MAIN-------------------------------#
@@ -72,6 +75,7 @@ with open('server.txt', 'r') as arq:
         valores = line.split()
         ip_id_objects.append(IP_ID_Class(valores[0], int(valores[1])))
     arq.close()
+
 #Printa Porta, Ip e Ids
 print "OLA, O MEU IP E O SEGUINTE", getMyIP()
 print "Numero de Servidores:", number_of_servers
