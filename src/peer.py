@@ -57,7 +57,7 @@ def client():
         time.sleep(5)
         for i in range (0, len(ip_id_objects)-1):
             print 'Sou o Cliente, estou me preparando para enviar uma msg'
-            MESSAGE = "Sou o " + ip_id_objects[i].IP + ' Estou Vivo' 
+            MESSAGE = "Sou o " + getMyIP() + ' Estou Vivo' 
             tcps[i].send(MESSAGE)
             print "Sou o Cliente, consegui enviar a mensagem"
 #        tcp_client.close()
