@@ -5,14 +5,6 @@ import sys
 import threading
 import time
 
-#####################################################################
-######################Variaveis Importantes##########################
-# port = porta                                                      #
-# ip_id_objects = array de objetos que contem IP e ID               #
-# number_of_server = Numero de servidores                           #
-#####################################################################
-
-TCP_IP = '200.17.202.6'
 BUFFER_SIZE = 1024
 
 #Classe com os objetos IP e ID
