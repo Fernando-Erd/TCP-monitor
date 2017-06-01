@@ -29,7 +29,8 @@ def getMyIP():
 def serverListen(conn, addr):
     while True:
         data = conn.recv(BUFFER_SIZE)
-        print "Mensagem:", data
+        if (data != ""):
+            print "Mensagem:", data
 
 
 #Inicia o servidor em determinada porta, para cada sessao tcp conectada cria
