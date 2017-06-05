@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Trabalho Prático - Redes II</title>
+	<style>
+		a:link{text-decoration:none;color:#000;}
+		a:visited{text-decoration:none;}		
+                a:hover{text-decoration:underline}
+		a.active{text-decoration:underline;}
+	</style>		
+    </head>
+
+    <body>
+	<div class="title">
+		<h1 align="center">
+			<a href="./index.html" style="text-decoration:none; color:#C70E34 ; font-family:Times New Roman"> 
+				- Trabalho Prático Redes II -
+			</a>
+		</h1>
+	</div>
+	<hr size="1" width="100%">
+	<br><br>
+	<div style="margin-left:15%; width: 70%;font-family:Times New Roman ;">
+		<div style="float: left; width:60%; font-size:20px;">
+			<b>Prof. Elias P. Duarte Jr.</b><br>
+			<b>CI061 Redes de Computadores II 2017/01</b><br>
+			Fernando Claudecir Erd (fce15) GRR20152936<br>
+			Gabriela Yukari Kimura (gyk15) GRR20151446
+		</div>
+		<div style="float: left; width:40%; font-size:21px;">
+			<b>Especificação</b><br>
+			<a href="especificacao.txt" target="_blank">especificacao.txt</a><br><br>
+			<b>Código fonte e Logs</b><br>
+			<a href="peer.py.txt" target="_blank">peer.py</a>
+			&nbsp;
+			<a href="log.txt" target="_blank">Log.txt</a>
+			&nbsp;
+			<a href="server.txt" target="_blank">server.txt</a>
+
+		</div>
+ 		<br style="clear: left;" />
+	</div>	
+	<br><br>
+	<div style="margin-left:15%; width:70%; font-size:19px;">
+		<b><h1 style="font-size: 21px;">Relatório</h1></b>
+		<p>O trabalho foi implementado na linguagem Python.</p>
+		<p>Foi definido um arquivo com o nome server.txt que contém em sua primeira linha o número de servidores e o número da porta utilizada na comunicação entre os peers. Em seguida são citados o IP e ID de cada um deles, como demonstrado abaixo:</p>
+		<div style="margin-left:40%">
+			<i>serverFile.txt</i><br>
+                	<i>Número de servidores
+			&nbsp;
+                	Porta<br>
+			IP-0
+			&nbsp;
+			ID-0<br>
+			IP-1
+			&nbsp;
+			ID-1<br>
+			...<br>
+			IP-N
+			&nbsp;
+			ID-N<br></i>
+                </div>
+		<p>Para a leitura deste arquivo é chamada a função <i>openFile()</i>, guardando em variáveis globais os valores de porta e número de servidores. Além disso, processa os dados de cada peer da rede e guarda eles no objeto chamado <i>serverFile</i>, composto dos seguintes campos:</p>
+		<div style="margin-left:40%">
+			<i>serverFile[i]=(<br>
+			ID:&nbsp;ID da máquina,<br>
+			IP:&nbsp;IP da máquina,<br>
+			session:&nbsp;Conexão socket<br>
+			)</i>
+		</div>
+		<p>Sendo o valor da Conexão Socket inicialmente nula.</p>
+		<p>Após a leitura do arquivo <i>serverFile.txt</i> é iniciada então uma thread cujo objetivo é criar um socket TCP e conectar a máquina à porta já definida e aguardar o recebimento das mensagens dos demais peers.</p>
+		<p>Em seguida o processo que está executando chama a função <i>generateSessionObject</i> que inicia a conexão com as n-1 máquinas, atualizando o objeto <i>serverFile</i> ao adicionar a conexão no campo session de cada máquina conectada.</p>
+		<p>Conexões realizadas, é chamada a função heartbeat, que manda uma mensagem a cada 5 segundos às demais máquinas informando-as que estão "vivas" e podem receber mensagens.</p>
+		<p>Para o recebimento do heartbeat, na função <i>server()</i> é iniciada uma thread para cada nova conexão com o objetivo de monitorá-la individualmente. Caso em alguma thread o recebimento do heartbeat demore mais que 5 segundos é assumido que aquela conexão caiu, e a máquina que devia ter enviado o heartbeat "morreu".</p>
+		<p>Nesta situação, existem duas possibilidades.Na primeira o valor váriavel global <i>lider</i> é igual ao id da máquina que "morreu", e neste caso é chamada a função <i>urgency()</i>, que envia uma mensagem urgente para as outras máquinas avisando que o lider "morreu" e que a váriavel global <i>lider</i> deve ser atualizada. Já na segunda, a máquina que se desconectou não é o líder e, portanto, é apenas removido do objeto <i>serverFile</i> as suas informações e conexão.</p>
+		<p>Obs: A atualização da váriavel global é realizada substituindo o seu antigo valor pelo primeiro valor de ID do objeto <i>serverFile</i> e nao somente acrescido de 1, para evitarmos a situação da máquina seguinte a da atual líder "morrer" e não existir máquina com ID igual a lider+1.</p>
+
+	</div>
+    </body>
+</html>
+	

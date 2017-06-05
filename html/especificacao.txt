@@ -1,0 +1,7 @@
+	Você vai implementar um sistema de N peers TCP que se monitoram e elegem um líder entre eles. Os peers estabelecem conexão entre eles -- o sistema deve ser executado com no mínimo N=3, idealmente N=4 peers. Cada peer tem um identificador no sistema, que inicia em 0 e vai até N-1.
+	De tempos em tempos cada peer envia uma mensagem aos demais, informando que está executando corretamente. Esta mensagem é chamada de heartbeat. O líder é o peer correto com o menor identificador. Por exemplo, em um sistema com N=4 peers, se todos os peers com id=0, 1, 2 e 3 estão corretos, o líder é o processo 0. Se o peer 0 falha, o líder então é o processo 1, e assim por diante.
+	A falha de um peer deve ser causada simplesmente matando o processo correspondente. A falha deve ser detectada pelo encerramento da conexão TCP correspondente. Observe que após detectar que a conexão caiu, o peer não manda mais heartbeats.
+	Quando um peer detecta que houve a troca de líder manda uma mensagem TCP urgente para os demais peers. Cada peer mantém e informa o id do líder ao usuário.
+
+Atenção: a eleição só inicia após um peer detectar que todos os demais estão corretos e receberem mensagens de heartbeats de todos os peers. Em outras palavras: o resultado da primeira eleição resulta no peer 0 como líder.
+	Prepare um arquivo de log para cada execução, concatenando os logs gerados por cada peer individual.

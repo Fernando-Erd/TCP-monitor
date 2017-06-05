@@ -60,7 +60,7 @@ def serverListen(conn, addr):
                         serverFile.remove(obj)
                     print "Veja o vetor: ["
                     for i in range(0,len(serverFile)):
-                        print "("+serverFile[i].IP+", "+ str(serverFile[i].ID)+ ", socket)"        
+                        print "("+serverFile[i].IP+", "+ str(serverFile[i].ID)+ ", None)"        
                     print "]"
             break;
 

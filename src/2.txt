@@ -1,0 +1,91 @@
+==============================================================
+Trabalho Pratico REDES II 2017/1 - Prof. Elias P. Duarte Jr.
+Aluno:Fernando Claudecir Erd - GRR20152936 - fce15
+Aluno:Gabriela Yukari Kimura - GRR20151446 - gyk15
+==============================================================
+
+PEER 0
+Iniciei o vetor
+O vetor estah vazio
+Veja o vetor: [ ]
+Abri o arquivo
+Processei os dados do arquivo
+Veja os dados: 
+Numero de servidores: 4
+Numero da porta: 9845
+Inseri IP:200.17.202.6 e ID:0 ao vetor
+Inseri IP:200.17.202.11 e ID:1 ao vetor
+Inseri IP:10.254.223.64 e ID:2 ao vetor
+Inseri IP:200.17.202.28 e ID:3 ao vetor
+Veja o vetor: [
+(200.17.202.6, 0, None)
+(200.17.202.11, 1, None)
+(10.254.223.64, 2, None)
+(200.17.202.28, 3, None)
+]
+Iniciei peer com o IP:10.254.223.64 e ID:2
+Criei um socket TCP
+Conectei a porta 9845
+Comecei a escutar
+200.17.202.6 se conectou
+200.17.202.11 se conectou
+Criei um socket TCP
+Conectei ao servidor  200.17.202.6
+Adicionei a conexao com 200.17.202.6 ao vetor
+Veja o vetor: [
+(200.17.202.6, 0, None)
+(200.17.202.11, 1, None)
+(10.254.223.64, 2, None)
+(200.17.202.28, 3, None)
+]
+Criei um socket TCP
+Conectei ao servidor  200.17.202.11
+Adicionei a conexao com 200.17.202.11 ao vetor
+Veja o vetor: [
+(200.17.202.6, 0, None)
+(200.17.202.11, 1, None)
+(10.254.223.64, 2, None)
+(200.17.202.28, 3, None)
+]
+Criei um socket TCP
+Conectei ao servidor  200.17.202.28
+Adicionei a conexao com 200.17.202.28 ao vetor
+Veja o vetor: [
+(200.17.202.6, 0, None)
+(200.17.202.11, 1, None)
+(10.254.223.64, 2, None)
+(200.17.202.28, 3, None)
+]
+Realizei conexao com todos os peers
+Lider inicia igual a 0
+200.17.202.28 se conectou
+Recebi a mensagem: Sou o 200.17.202.6 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.11 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.28 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.6 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.11 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.28 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.6 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.11 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.28 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.6 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.11 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.28 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.6 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.11 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.28 Estou Vivo
+Parei de receber mensagens de 200.17.202.6
+Removi 200.17.202.6 do vetor
+Lider morreu:  0
+Recebi a mensagem: Alguem morreu
+Veja o vetor: [
+(200.17.202.11, 1, socket)
+(10.254.223.64, 2, socket)
+(200.17.202.28, 3, socket)
+]
+Recebi a mensagem: Alguem morreu
+Recebi a mensagem: Sou o 200.17.202.11 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.28 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.11 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.28 Estou Vivo
+Recebi a mensagem: Sou o 200.17.202.11 Estou Vivo
